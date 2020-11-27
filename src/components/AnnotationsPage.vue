@@ -46,11 +46,16 @@
       <p ref="paragraph" v-selection.fix="{getSelection:getSelection}">{{ paragraph_context }}</p>
       <br>
 
-      <b-form-input v-model="question" type="text" placeholder="Type question here..."></b-form-input>
+      <b-form-input v-model="question" type="text" placeholder="Type question ..."></b-form-input>
       <br>
 
-      <b-form-input v-model="answer" type="text" placeholder="Type answer here..."></b-form-input>
+      <b-form-input v-model="answer" type="text" placeholder="Type answer ..."></b-form-input>
       <br>
+      <p> If this question and answer are unanswerable, select this option {{statement}}</p>
+      <input type="checkbox" v-model="statement"/>
+	  
+	  <br />
+	  
 
       <b-button :size="''" :variant="'secondary'" v-on:click="addAnnotation()">Add annotation</b-button> or 
       <b-button
@@ -75,13 +80,13 @@
       </b-table>
       <br>
 
-      <div v-if="data_number > 1 && context_number == 1">
+      <div v-if="data_number > 1 && context_number == 1 && context_number < json.data[data_number - 1].paragraphs.length">
         <b-button
           :size="''"
           :variant="'outline-secondary'"
           v-on:click="data_number -= 1, context_number = json.data[data_number - 1].paragraphs.length"
         >Previous</b-button> or 
-        <b-button :size="''" :variant="'outline-primary'" v-on:click="context_number += 1">Next</b-button>
+        <b-button :size="''" :variant="'outline-primary'" v-on:click="context_number += 1">Next3</b-button>
       </div>
       <div v-else-if="context_number < json.data[data_number - 1].paragraphs.length">
         <b-button
@@ -89,7 +94,7 @@
           :variant="'outline-secondary'"
           v-on:click="context_number -= 1"
         >Previous</b-button> or 
-        <b-button :size="''" :variant="'outline-primary'" v-on:click="context_number += 1">Next</b-button>
+        <b-button :size="''" :variant="'outline-primary'" v-on:click="context_number += 1">Next2</b-button>
       </div>
       <div v-else>
         <b-button
@@ -101,7 +106,7 @@
           :size="''"
           :variant="'outline-primary'"
           v-on:click="data_number += 1, context_number = 1"
-        >Next</b-button>
+        >Next1</b-button>
       </div>
       <br>
       <br>
@@ -141,7 +146,8 @@ export default {
       question: "",
       answer: "",
       fields: ["Questions", "Answers", "Edit"],
-      query: ""
+      query: "",
+      statement: true
     };
   },
   methods: {
@@ -149,10 +155,16 @@ export default {
       var paragraph_container = this.json.data[this.data_number - 1].paragraphs[
         this.context_number - 1
       ];
+      //var possible = true;
+      //if(this.answer.length > 0 )
+      //{
+      ///possible=false;
+      //}
       var qa = {
         question: this.question,
         id: uuidv4(),
-        answers: [{ answer_start: this.answer_start, text: this.answer }]
+        answers: [{ answer_start: this.answer_start, text: this.answer }],
+        is_impossible: this.statement 
       };
       paragraph_container.qas.push(qa);
       this.question = "";

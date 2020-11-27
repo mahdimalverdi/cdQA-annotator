@@ -4,23 +4,31 @@
       <AnnotationsPage v-bind:json="json"/>
     </div>
     <div v-else>
+    <img
+		dir="right"
+		align="right"
+        src="../assets/bigdata.jpg"
+        height="50"
+        width="50"
+      >
       <h1>cdQA-annotator</h1>
+      
       <hr>
-      <p>
-        cdQA-annotator a web-based annotator for closed-domain question answering datasets created for the
+      
+      <p align="right" dir="rtl"font="bnazanin">
+به سیستم تولید مجموعه داده پرسش‌پاسخ (پ-پ) زبان فارسی خوش آمدید.
+        نسخه اولیه این ابزار را میتوان در آدرس
         <a
-          href="https://github.com/cdqa-suite"
-        >cdQA-suite</a> project.
+          href="https://github.com/cdqa-suite/cdQA-annotator"
+        >cdQA-annotator</a> مشاهده کرد.
+      </p>
+      <p align="right" dir="rtl"font="bnazanin">
+        برای شروع فایلی مانند 
+        <a href="https://rajpurkar.github.io/SQuAD-explorer/">SQuAD v2.0</a>-که هر سند به تعدادی پاراگراف تقسیم شده است نیاز است.
+        
       </p>
       <p>
-        To get started, upload a
-        <a href="https://rajpurkar.github.io/SQuAD-explorer/">SQuAD v1.1</a>-like JSON file
-        where each document in the corpus has been pre-cut into paragraphs.
-      </p>
-      <p>
-        <strong>Example:</strong>
-      </p>
-      <json-viewer :value="jsonData" :expand-depth="10" copyable></json-viewer>
+        
       <br>
       <div class="uploadBar">
         <b-form-file
@@ -91,5 +99,13 @@ export default {
 <style scoped>
 .uploadBar {
   max-width: 300px;
+  
+  height: 100%;
+  
+  direction:"rtl";
+  align:"right";
+
+  
+  
 }
 </style>
